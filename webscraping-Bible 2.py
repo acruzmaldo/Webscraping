@@ -6,10 +6,7 @@ from urllib.request import urlopen, Request
 
 num = random.randrange(1,22,1)
 
-if num < 10:
-    num = '0' + str(num)
-
-url = 'https://ebible.org/asv/JHN' + str(num) + '.htm'
+url = 'https://biblehub.com/bsb/john/' + str(num) + '.htm'
 
 webpage = url
 
@@ -22,9 +19,7 @@ webpage = urlopen(req).read()
 soup = BeautifulSoup(webpage, 'html.parser')
 
 
-page_verses = soup.findAll('div', class_ = 'main')
-
-#print(page_verses)
+page_verses = soup.findAll('div', class_ = 'padleft')
 
 for verse in page_verses:
     verse_list = verse.text.split('.')
@@ -33,11 +28,13 @@ for verse in page_verses:
 
 #print(verse_list)
 
-my_verse = random.choice(verse_list[:-5])
+my_verse = random.choice(verse_list[:])
 
-print(f"Chapter: {num}, Verse:{my_verse}")
+#print(f"Chapter: {num}, Verse:{my_verse}")
 
-message = "Chapter:" + str(num) + " Verse:" + my_verse
+message = "Chapter: " + str(num) + " Verse: " + my_verse
+print(message)
+
 
 import keys2
 from twilio.rest import Client
